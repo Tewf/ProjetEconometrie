@@ -1,8 +1,9 @@
-# Projet d'Économétrie : Modélisation Hédonique des Prix Immobiliers à Grenoble
+# Projet d'Économétrie : Modélisation Hédonique des Prix Immobiliers à Grenoble 2025
+ANZID KELTOUM - EL KORAICHI Mohamed Yassine - Hamlil Tawfik
 
-## 📋 Résumé du Projet
+##  Résumé du Projet :
 
-Ce projet académique de niveau Master/Doctorat en économétrie applique les méthodes de **modélisation hédonique des prix** (*hedonic pricing*) au marché immobilier grenoblois. Il analyse les données DVF (Demandes de Valeurs Foncières) du premier semestre 2025 pour identifier les déterminants du prix des biens immobiliers et construire des modèles prédictifs robustes.
+Ce projet académique en économétrie applique les méthodes de **modélisation hédonique des prix** (*hedonic pricing*) au marché immobilier grenoblois. Il analyse les données DVF (Demandes de Valeurs Foncières) du premier semestre 2025 pour identifier les déterminants du prix des biens immobiliers et construire des modèles prédictifs robustes.
 
 ### Contexte Économétrique
 
@@ -17,21 +18,22 @@ où :
 - `f()` = fonction de prix hédonique (linéaire ou non-linéaire)
 - `ε_i` = terme d'erreur aléatoire
 
-### Objectifs du Projet
+### Objectifs :
 
 1. **Nettoyage et préparation** des données brutes DVF pour la commune de Grenoble
 2. **Analyse exploratoire** des variables explicatives et de la variable dépendante (prix)
-3. **Estimation économétrique** via régression linéaire (OLS) et ses variantes (log-log, semi-log)
-4. **Modélisation prédictive** par algorithmes d'apprentissage automatique (Random Forest)
-5. **Tests de robustesse** et diagnostics (hétéroscédasticité, multicolinéarité, outliers)
+3. **Estimation économétrique** via régression linéaire et ses variantes (log-log, niv-log)
+4. **Modélisation prédictive** par algorithmes d'apprentissage automatique (Random Forest: ensemble d’arbres capturant non-linéarités et interactions))
+5. **Tests de robustesse** et diagnostics (hétéroscédasticité = variance non constante ; multicolinéarité = variables corrélées ; outliers = valeurs extrêmes)
 6. **Interprétation économique** des résultats et implications pour le marché immobilier
 
-## 🗂️ Structure du Projet
+
+##  Structure du Projet
 
 ```
 ProjetEconometrie/
 │
-├── README.md                          # Ce fichier (vue d'ensemble)
+├── README.md                          # Ce fichier
 │
 ├── DataPreprocessing/                 # Étape 1 : Préparation des données
 │   ├── README.md                      # Documentation détaillée du preprocessing
@@ -57,27 +59,27 @@ ProjetEconometrie/
     └── HedonicHousingPriceIndexes.pdf # Article de référence
 ```
 
-## 📊 Pipeline Méthodologique
+##  Plan du Projet :
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    PIPELINE ÉCONOMÉTRIQUE                        │
+│                    Plan                      │
 └─────────────────────────────────────────────────────────────────┘
 
     [1] Données Brutes DVF                                 [Fichier : valeursfoncieres-2025-s1.txt.zip]
            │                                               [Taille : 1,387,077 transactions nationales]
-           │                                               [Format : TXT délimité par |]
+           │                                              
            ▼
     ┌──────────────────────────────┐
     │  PREPROCESSING               │                      [Notebook : DataPreparation.ipynb]
-    │  ─────────────────            │
+    │  ─────────────────           │
     │  • Filtrage géographique     │ ─────────────▶      Grenoble uniquement (INSEE: 38185)
     │    (commune de Grenoble)     │
     │  • Filtrage par nature       │ ─────────────▶      Ventes uniquement (pas de donations)
     │  • Gestion valeurs manquantes│ ─────────────▶      Suppression/imputation selon % missing
-    │  • Détection outliers        │ ─────────────▶      Méthode IQR par type de bien
+    │  • Détection outliers        │ ─────────────▶      Méthode IQR par type de bien (Méthode IQR : on repère les valeurs anormalement hautes ou basses en utilisant l’intervalle interquartile Q1–Q3, et on exclut les points situés au-delà de 1.5×IQR)
     │  • Ingénierie de features    │ ─────────────▶      Variables temporelles (mois, trimestre)
-    │  • Encodage catégories       │ ─────────────▶      type_local → codes 1-4
+    │  • Encodage catégories       │ ─────────────▶      type_local → codes 1-4 ( on évite 0 , pour ne pas avoir des problème avec ln)
     └──────────────────────────────┘
            │
            │ [Output : df_grenoble_vente.csv]
@@ -86,7 +88,7 @@ ProjetEconometrie/
            ▼
     ┌──────────────────────────────┐
     │  EXPLORATION & DIAGNOSTICS   │                      [Notebooks : Linear + Random Forest]
-    │  ─────────────────────────    │
+    │  ─────────────────────────   │
     │  • Statistiques descriptives │
     │  • Matrice de corrélation    │
     │  • Tests de normalité        │
@@ -95,22 +97,22 @@ ProjetEconometrie/
            │
            ├─────────────────────────────────┬─────────────────────────────────┐
            ▼                                 ▼                                 ▼
-    ┌──────────────────┐            ┌──────────────────┐            ┌──────────────────┐
-    │ MODÈLE 1 : OLS   │            │ MODÈLE 2 : Log   │            │ MODÈLE 3 : RF    │
-    │                  │            │                  │            │                  │
-    │ P = β₀ + βX + ε  │            │ log(P) = βX + ε  │            │ Ensemble de 100  │
-    │                  │            │                  │            │ arbres CART      │
-    │ Interprétation : │            │ Interprétation : │            │                  │
-    │ β = effet        │            │ β = élasticité % │            │ Non-paramétrique │
-    │ marginal         │            │                  │            │                  │
-    └──────────────────┘            └──────────────────┘            └──────────────────┘
+    ┌──────────────────┐            ┌──────────────────┐            ┌─────────────────────────┐
+    │ MODÈLE 1 : OLS   │            │ MODÈLE 2 : Log   │            │ MODÈLE 3 : Random Forest│
+    │                  │            │                  │            │                         │
+    │ P = β₀ + βX + ε  │            │ log(P) = βX + ε  │            │ Ensemble de 100         │
+    │                  │            │                  │            │ arbres CART             │
+    │ Interprétation : │            │ Interprétation : │            │                         │
+    │ β = effet        │            │ β = élasticité % │            │ Non-paramétrique        │
+    │ marginal         │            │                  │            │                         │
+    └──────────────────┘            └──────────────────┘            └─────────────────────────┘
            │                                 │                                 │
            └─────────────────────────────────┴─────────────────────────────────┘
                                              │
                                              ▼
                                     ┌──────────────────────────────┐
                                     │  ÉVALUATION & COMPARAISON    │
-                                    │  ────────────────────────     │
+                                    │  ────────────────────────    │
                                     │  • R² (coefficient de        │
                                     │    détermination)            │
                                     │  • RMSE (erreur quadratique) │
@@ -122,7 +124,7 @@ ProjetEconometrie/
                                              ▼
                                     ┌──────────────────────────────┐
                                     │  INTERPRÉTATION ÉCONOMIQUE   │
-                                    │  ────────────────────────     │
+                                    │  ────────────────────────    │
                                     │  • Élasticités-prix          │
                                     │  • Valeur marginale des      │
                                     │    caractéristiques          │
@@ -130,7 +132,7 @@ ProjetEconometrie/
                                     └──────────────────────────────┘
 ```
 
-## 🎯 Données : DVF (Demandes de Valeurs Foncières)
+##  Données : DVF (Demandes de Valeurs Foncières)
 
 ### Source
 
@@ -160,55 +162,9 @@ Après prétraitement, le jeu de données `df_grenoble_vente.csv` contient 7 var
 - **Prix moyen** : ~250 000 € (varie selon type de bien)
 - **Surface moyenne** : ~60 m² (appartements dominants)
 
-## 🔧 Installation et Exécution
 
-### Prérequis
 
-- **Python** ≥ 3.8 (testé avec Python 3.12.11)
-- **Jupyter Notebook** ou **JupyterLab**
-- **Gestionnaire de paquets** : pip ou conda
 
-### Packages Requis
-
-```bash
-# Installation des dépendances
-pip install pandas numpy scipy matplotlib seaborn statsmodels scikit-learn
-
-# Versions recommandées (compatibilité testée)
-# pandas >= 2.0
-# numpy >= 1.22
-# statsmodels >= 0.14
-# scikit-learn >= 1.0
-# matplotlib >= 3.5
-# seaborn >= 0.12
-```
-
-### Ordre d'Exécution
-
-#### Étape 1 : Préparation des Données
-
-```bash
-# 1. Extraire les données brutes
-cd DataPreprocessing
-unzip valeursfoncieres-2025-s1.txt.zip
-
-# 2. Lancer le notebook de preprocessing
-jupyter notebook DataPreparation.ipynb
-
-# Exécuter toutes les cellules (Runtime > Run all)
-# Output attendu : PreprocessedData/df_grenoble_vente.csv
-```
-
-#### Étape 2 : Modélisation Économétrique
-
-```bash
-# 3. Modèle OLS (régression linéaire)
-cd ../ModelTraining
-jupyter notebook LinearRegression.ipynb
-
-# 4. Modèle Random Forest (apprentissage automatique)
-jupyter notebook RandomForest.ipynb
-```
 
 ### Reproduction des Résultats
 
@@ -219,7 +175,7 @@ Pour garantir la **reproductibilité** :
 3. **Environnement** : Utiliser les versions de packages spécifiées ci-dessus
 4. **Ordre** : Respecter strictement l'ordre d'exécution (DataPreparation → LinearRegression / RandomForest)
 
-## 📈 Méthodologie Économétrique
+##  Méthodologie Économétrique
 
 ### 1. Modèle Linéaire Simple (OLS)
 
@@ -230,10 +186,11 @@ price_i = β₀ + β₁·surface_bati_i + β₂·nb_pieces_i + β₃·date_i + �
 
 **Hypothèses** :
 - Linéarité de la relation prix-caractéristiques
+- Exogénéité stricte : E(ε_i|X_i) = 0
 - Homoscédasticité : Var(ε_i|X_i) = σ²
 - Non-autocorrélation des erreurs (données cross-section)
-- Exogénéité stricte : E(ε_i|X_i) = 0
 - Normalité des résidus (pour tests d'hypothèse)
+  
 
 **Estimation** : Méthode des Moindres Carrés Ordinaires (OLS)
 ```
@@ -247,7 +204,7 @@ price_i = β₀ + β₁·surface_bati_i + β₂·nb_pieces_i + β₃·date_i + �
 - Test de Breusch-Pagan : hétéroscédasticité
 - Test de White : forme générale d'hétéroscédasticité
 
-### 2. Modèle Log-Linéaire (Semi-log)
+### 2. Modèle Log-Linéaire (log-niv)
 
 **Spécification** :
 ```
@@ -264,24 +221,43 @@ log(price_i) = β₀ + β₁·X_i + ε_i
 
 ### 3. Modèle Random Forest
 
-**Principe** : Ensemble de **arbres de décision** (CART) construits par bootstrap aggregating (bagging)
+**Principe** : Ensemble de **arbres de décision** (CART) construits par bootstrap aggregating (bagging).
+
+La Random Forest est une méthode de prédiction qui utilise beaucoup d’arbres de décision.
+Un arbre de décision, c’est comme une série de questions du type :
+
+« La surface est-elle > 40 m² ? »
+
+« Le type du bien est-il Appartement ? »
+
+« Le prix est-il supérieur à X ? »
+
+Chaque arbre fait sa prédiction individuellement, puis la Random Forest moyenne les prédictions de tous les arbres pour obtenir un résultat plus fiable.
+
+C’est un peu comme demander leur avis à 100 experts différents au lieu d’un seul.
 
 **Paramètres** :
-- Nombre d'arbres : 100
-- Critère de split : MSE (Mean Squared Error)
-- Profondeur maximale : illimitée (croissance complète)
+- Nombre d'arbres : 100  ➝ Plus il y a d’arbres, plus la prédiction est fiable. 100 arbres = un bon compromis entre précision et rapidité.
+- Critère de split : MSE (Mean Squared Error)  ➝ À chaque étape, l’arbre choisit la meilleure question (split) qui minimise l’erreur quadratique moyenne.
+- Profondeur maximale : illimitée (croissance complète) ➝ Les arbres peuvent grandir tant qu’ils trouvent de la différence dans les données.
+Cela leur permet de capturer des relations complexes.
 
 **Avantages** :
-- Non-paramétrique : pas d'hypothèse sur la forme fonctionnelle
-- Capture les interactions et non-linéarités automatiquement
-- Robuste aux outliers et valeurs manquantes
-- Pas de multicolinéarité
+- Non-paramétrique : pas d'hypothèse sur la forme fonctionnelle.  Contrairement à la régression linéaire, on n’impose pas une relation linéaire entre prix et variables.
+Le modèle découvre lui-même la forme de la relation.
+- Capture les interactions et non-linéarités automatiquement.     Exemple :
+l’effet de la surface peut dépendre du nombre de pièces, du type de bien, du quartier…
+La Random Forest apprend tout ça toute seule.
+- Robuste aux outliers et valeurs manquantes.     Quelques ventes aberrantes (trop chères ou trop basses) ne cassent pas la prédiction.
+- Pas de multicolinéarité.    Même si deux variables sont très corrélées (surface ↔ pièces), la Random Forest le gère sans problème.
 
 **Évaluation** :
-- Importance des variables : réduction moyenne de l'impureté (Gini importance)
-- Validation croisée : split train/test (80/20)
+- Importance des variables : réduction moyenne de l'impureté (Gini importance) ➝ Le modèle mesure quelles variables aident le plus à réduire l’erreur.
+C’est un indicateur de “quelles caractéristiques expliquent le mieux le prix ?”
+- Validation croisée : split train/test (80/20) ➝ 80% des données pour apprendre, 20% pour vérifier si le modèle prédit bien sur des données jamais vues.
+C’est essentiel pour tester la fiabilité du modèle.
 
-## 📚 Concepts Économétriques Clés
+##  Concepts Économétriques Clés
 
 ### Prix Hédoniques
 
@@ -324,13 +300,17 @@ Cela représente la disposition à payer (willingness to pay) pour une unité su
 - Difficultés d'interprétation
 
 **Détection** :
-- Matrice de corrélation
-- VIF (Variance Inflation Factor)
+- Matrice de corrélation ➝ Permet de visualiser rapidement quelles variables explicatives sont fortement corrélées entre elles.
+Si deux variables ont une corrélation proche de 0.8–0.9, cela indique une possible multicolinéarité.
+- VIF (Variance Inflation Factor) ➝ Indicateur qui mesure combien la variance d’un coefficient est “gonflée” à cause de la corrélation avec d’autres variables.
+Un VIF > 10 est généralement considéré comme un signe sérieux de multicolinéarité.
 
 **Solutions** :
-- Retrait de variables redondantes
-- Régularisation (Ridge, Lasso)
-- Composantes principales (PCA)
+- Retrait de variables redondantes ➝ Si deux variables sont presque identiques (ex : surface et nombre de pièces), on peut en supprimer une pour stabiliser le modèle et éviter la multicolinéarité.
+- Régularisation (Ridge, Lasso) ➝ Ce sont des modèles de régression qui ajoutent une pénalité lorsque les coefficients deviennent trop grands.
+Ridge réduit la variance des coefficients (multicolinéarité), Lasso peut même éliminer des variables inutiles.
+- Composantes principales (PCA) ➝ Méthode qui transforme les variables corrélées en nouvelles variables indépendantes appelées “composantes principales”.
+Cela réduit la dimension du problème tout en conservant l’information essentielle.
 
 ### Hétéroscédasticité
 
@@ -341,16 +321,19 @@ Cela représente la disposition à payer (willingness to pay) pour une unité su
 - Tests statistiques invalides
 
 **Détection** :
-- Test de Breusch-Pagan
-- Test de White
-- Graphique des résidus
+- Test de Breusch-Pagan ➝ Test statistique qui vérifie si la variance des erreurs dépend des variables explicatives. S’il est significatif, il y a hétéroscédasticité.
+- Test de White ➝ Version plus générale du test, capable de détecter toutes formes possibles d’hétéroscédasticité (même non linéaires).
+- Graphique des résidus ➝ On trace les résidus en fonction des valeurs prédites : si on observe un “cône” ou un motif, cela indique une variance non constante.
 
 **Solutions** :
-- Transformation logarithmique
-- Erreurs robustes (White, HC3)
-- WLS (Weighted Least Squares)
+- Transformation logarithmique ➝ Prendre log(price) stabilise souvent la variance, surtout quand les prix élevés ont des écarts plus grands.
+- Erreurs robustes (White, HC3) ➝ Permet de corriger les tests t et F même si l’hétéroscédasticité est présente, sans modifier le modèle.
+- WLS (Weighted Least Squares) ➝ Méthode qui “pondère” les observations selon leur variance : les points avec forte variance comptent moins, ce qui résout l’hétéroscédasticité à la source.
 
-## 🔍 Résultats Attendus
+
+
+
+##  Résultats Attendus
 
 ### Déterminants Principaux du Prix (hypothèses)
 
@@ -369,26 +352,9 @@ Cela représente la disposition à payer (willingness to pay) pour une unité su
 | OLS log-log | 0.70-0.80 | 50 000€ | Stabilité, élasticités |
 | Random Forest | 0.75-0.85 | 45 000€ | Performance prédictive, non-linéarités |
 
-## 🎓 Public Cible et Utilisation Pédagogique
 
-Ce projet est conçu pour :
 
-### Étudiants Débutants en Économétrie
-- Apprentissage progressif des concepts (de OLS à ML)
-- Code commenté ligne par ligne
-- Visualisations pédagogiques à chaque étape
-
-### Enseignants et Formateurs
-- Matériel prêt à l'emploi pour cours de régression
-- Cas d'application réel et concret
-- Datasets préparés et documentés
-
-### Chercheurs et Analystes
-- Pipeline reproductible
-- Tests statistiques complets
-- Comparaison méthodologique (paramétrique vs non-paramétrique)
-
-## 📖 Références Bibliographiques
+##  Références Bibliographiques
 
 ### Ouvrages de Référence
 
@@ -419,7 +385,52 @@ Ce projet est conçu pour :
 8. **Documentation DVF** : Voir `DataPreprocessing/DataDocumentation/`
    - Notice descriptive officielle des fichiers DVF
 
-## 🛠️ Diagnostic et Résolution de Problèmes
+
+##  Installation et Exécution
+
+### Prérequis
+
+- **Python** ≥ 3.8 (testé avec Python 3.12.11)
+- **Jupyter Notebook** ou **JupyterLab**
+- **Gestionnaire de paquets** : pip ou conda
+
+### Packages Requis
+
+```bash
+# Installation des dépendances
+pip install pandas numpy scipy matplotlib seaborn statsmodels scikit-learn
+
+```
+
+### Ordre d'Exécution
+
+#### Étape 1 : Préparation des Données
+
+```bash
+# 1. Extraire les données brutes
+cd DataPreprocessing
+unzip valeursfoncieres-2025-s1.txt.zip
+
+# 2. Lancer le notebook de preprocessing
+jupyter notebook DataPreparation.ipynb
+
+# Exécuter toutes les cellules (Runtime > Run all)
+# Output attendu : PreprocessedData/df_grenoble_vente.csv
+```
+
+#### Étape 2 : Modélisation Économétrique
+
+```bash
+# 3. Modèle OLS (régression linéaire)
+cd ../ModelTraining
+jupyter notebook LinearRegression.ipynb
+
+# 4. Modèle Random Forest (apprentissage automatique)
+jupyter notebook RandomForest.ipynb
+```
+
+
+##  Diagnostic et Résolution de Problèmes
 
 ### Problèmes Courants
 
@@ -454,56 +465,6 @@ DtypeWarning: Columns have mixed types
 **Cause** : Initialisation aléatoire différente
 **Solution** : Vérifier que `random_state=42` est bien défini dans RandomForestRegressor
 
-## 🔄 Évolutions Futures
 
-### Extensions Possibles
 
-1. **Données longitudinales** : Analyser plusieurs semestres pour capturer l'évolution temporelle des prix
-2. **Données spatiales** : Intégrer des variables de localisation fine (quartier, distance CBD, aménités)
-3. **Modèles avancés** :
-   - Gradient Boosting (XGBoost, LightGBM)
-   - Réseaux de neurones (Deep Learning)
-   - Modèles spatiaux (SAR, SEM)
-4. **Variables supplémentaires** :
-   - État du bien (neuf, ancien)
-   - Étage, présence ascenseur
-   - Performance énergétique (DPE)
-5. **Tests économétriques avancés** :
-   - Variables instrumentales (2SLS) si endogénéité
-   - Panel data (si données répétées)
-   - Quantile regression (distribution complète)
 
-## 📞 Contact et Contribution
-
-### Auteur
-Projet académique en économétrie appliquée
-
-### Contribution
-Ce projet est open source et à vocation pédagogique. Les contributions sont les bienvenues :
-- Améliorations du code
-- Ajout de tests statistiques
-- Extension à d'autres communes
-- Traduction en anglais
-
-### Licence
-Les données DVF sont publiques (licence ouverte). Le code est sous licence MIT.
-
----
-
-## 📌 Checklist de Validation
-
-Avant de considérer le projet complet, vérifier :
-
-- [ ] Toutes les cellules des notebooks s'exécutent sans erreur
-- [ ] Le fichier `df_grenoble_vente.csv` est généré avec 1288 observations
-- [ ] Les modèles OLS affichent des coefficients significatifs (p < 0.05) pour surface_bati
-- [ ] Le R² des modèles est > 0.60
-- [ ] Les graphiques "Observé vs Prédit" montrent une corrélation visible
-- [ ] Les tests d'hétéroscédasticité sont réalisés
-- [ ] La matrice de corrélation est visualisée
-- [ ] Les importances de variables (RF) sont cohérentes avec la théorie économique
-
----
-
-**Version** : 1.0 (Novembre 2025)  
-**Dernière mise à jour** : 13 novembre 2025
