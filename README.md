@@ -54,7 +54,7 @@ ProjetEconometrie/
 │   ├── LinearRegression.ipynb         # Modèles OLS avec statsmodels
 │   └── RandomForest.ipynb             # Modèles ML avec scikit-learn
 │
-└── RevueDeLitterature/                # Étape 0 : Fondements théoriques
+└── RevueDeLitterature/                # Fondements théoriques
     ├── README.md                      # Contexte académique
     └── HedonicHousingPriceIndexes.pdf # Article de référence
 ```
