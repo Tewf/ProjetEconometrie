@@ -1,10 +1,10 @@
-# ModelTraining / RandomForest.ipynb — Forêt Aléatoire
+# ModelTraining (RandomForest.ipynb) — Forêt Aléatoire
 
-## 📋 Résumé Global
+## Résumé
 
-Ce notebook implémente la **modélisation prédictive des prix immobiliers** par Random Forest (Forêt Aléatoire), un algorithme d'apprentissage automatique non-paramétrique. Il complète l'approche économétrique classique (OLS) en capturant automatiquement les non-linéarités et interactions entre variables.
+Ce notebook implémente la **modélisation prédictive des prix immobiliers** par Random Forest (Forêt Aléatoire), un algorithme d'apprentissage automatique non-paramétrique. Il complète l'approche économétrique classique (régression linéaire) en capturant automatiquement les non-linéarités et interactions entre variables.
 
-### Rôle dans le Projet
+### Le but dans le Projet
 
 Le Random Forest représente l'**approche Machine Learning** de la modélisation des prix. Ce notebook :
 
@@ -15,7 +15,7 @@ Le Random Forest représente l'**approche Machine Learning** de la modélisation
 5. **Visualise** les prédictions et l'importance des variables
 6. **Compare** avec les résultats OLS
 
-### Pourquoi C'est Utile
+### Pourquoi C'est Utile ?
 
 - **Performance prédictive** : Généralement RMSE inférieur à OLS
 - **Non-paramétrique** : Pas d'hypothèse sur la forme fonctionnelle
@@ -23,7 +23,7 @@ Le Random Forest représente l'**approche Machine Learning** de la modélisation
 - **Robustesse** : Résistant aux outliers et multicolinéarité
 - **Importance des variables** : Ranking automatique des features
 
-### Comment Il Participe à la Démarche Économétrique
+### Comment Il Participe à la Démarche Économétrique ?
 
 ```
 [Phase 1] DataPreparation.ipynb → df_grenoble_vente.csv
@@ -39,9 +39,9 @@ Le Random Forest représente l'**approche Machine Learning** de la modélisation
                                   Trade-off : Interprétabilité vs Performance
 ```
 
-## 📂 Contenu du Notebook
+##  Contenu du Notebook
 
-### Structure (10 Sections)
+### Structure (10 Sections) :
 
 1. **Importations et Configuration** - Bibliothèques Python
 2. **Chargement des Données** - df_grenoble_vente.csv
@@ -54,24 +54,25 @@ Le Random Forest représente l'**approche Machine Learning** de la modélisation
 9. **Visualisations** - Observé vs prédit, importances
 10. **Conclusion** - Synthèse
 
-## 🌳 Random Forest : Principes
+##  Random Forest : Principes
 
 ### Algorithme
 
 Le Random Forest est un **ensemble de arbres de décision** (CART) construits par :
 
 1. **Bootstrap Aggregating (Bagging)** :
-   - Créer B échantillons bootstrap (avec remplacement) du dataset
+   - Créer B échantillons bootstrap (avec remplacement) du dataset → On crée plusieurs copies du dataset, en tirant les observations au hasard avec remplacement.
+(Donc certaines observations sont répétées, d’autres absentes.)
    - Entraîner un arbre sur chaque échantillon
 
 2. **Sélection Aléatoire de Features** :
-   - À chaque nœud de chaque arbre, sélectionner aléatoirement m features parmi p
-   - Diviser sur la meilleure feature parmi ces m
-   - Décorrèle les arbres → réduit la variance
+  → À chaque division dans un arbre, le modèle ne regarde qu’un petit sous-ensemble de variables.
+Cela fait que chaque arbre “pense différemment”, ce qui rend la forêt plus stable.
 
 3. **Prédiction par Vote/Moyenne** :
-   - Régression : moyenne des prédictions de tous les arbres
-   - Classification : vote majoritaire
+   → Chaque arbre donne une prédiction du prix.
+Le modèle final prend la moyenne de toutes les prédictions.
+(Comme demander l'avis à 100 personnes et faire la moyenne.)
 
 ### Formule
 
@@ -83,6 +84,12 @@ où :
   T_b = prédiction de l'arbre b
   x = vecteur de features
 ```
+#### Explication :
+  - On construit B arbres (par exemple 100).
+  - Chaque arbre fait une prédiction T_b(x)
+  - Le modèle final = la moyenne de toutes les prédictions.
+
+C’est exactement comme prendre 100 estimations de prix et calculer la moyenne pour avoir la valeur finale.
 
 ### Hyperparamètres Clés
 
@@ -95,37 +102,55 @@ où :
 | `max_features` | Features à considérer par split | 'sqrt' | Régression: 'sqrt' ou 'log2' |
 | `random_state` | Seed aléatoire | 42 | Reproductibilité |
 
-## 📦 Packages Utilisés
 
-### scikit-learn
+## Schéma Explicatif : Construction d'un Random Forest
 
-```python
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
-from sklearn.preprocessing import StandardScaler
+```
+┌────────────────────────────────────────────────────────────────┐
+│          CONSTRUCTION D'UN RANDOM FOREST (B=3 arbres)          │
+└────────────────────────────────────────────────────────────────┘
+
+Dataset Original (n=1288 observations)
+[Obs1, Obs2, Obs3, ..., Obs1288]
+         │
+         │ Bootstrap Sampling (avec remplacement)
+         │
+    ┌────┴────┬──────────────┐
+    ▼         ▼              ▼        
+Bootstrap1  Bootstrap2  Bootstrap3
+(n=1288)    (n=1288)    (n=1288)
+    │         │          │
+    │ Certaines obs répétées, d'autres absentes (~37% OOB)
+    │
+    ├─────────┼──────────┤
+    ▼         ▼          ▼
+┌───────┐ ┌───────┐  ┌───────┐
+│ Arbre1│ │ Arbre2│  │ Arbre3│
+│       │ │       │  │       │
+│   •   │ │   •   │  │   •   │ ← Nœud racine
+│  / \  │ │  / \  │  │  / \  │
+│ •   • │ │ •   • │  │ •   • │ ← Nœuds internes
+│/ \ / \│ │/ \ / \│  │/ \ / \│   (splits sur features aléatoires)
+│• • • •│ │• • • •│  │• • • •│ ← Feuilles (prédictions)
+└───────┘ └───────┘  └───────┘
+
+    │         │          │
+    │ Prédiction pour une nouvelle observation x_new
+    │
+    ▼         ▼          ▼
+  250k€     280k€      265k€
+    │         │          │
+    └────┬────┴────┬─────┘
+         │         │
+         ▼         ▼
+    Moyenne : (250+280+265)/3 = 265k€
+              ────────────────────
+                Prédiction finale
 ```
 
-**Fonctions clés** :
-- `RandomForestRegressor()` : Instanciation du modèle
-- `.fit(X_train, y_train)` : Entraînement
-- `.predict(X_test)` : Prédictions
-- `.feature_importances_` : Importance des variables (Gini importance)
-- `train_test_split()` : Division train/test (80/20)
-- Métriques : RMSE, R², MAE
 
-### Comparaison statsmodels vs sklearn
 
-| Aspect | statsmodels (OLS) | sklearn (RF) |
-|--------|-------------------|--------------|
-| **Objectif** | Inférence statistique | Prédiction |
-| **Sortie** | Coefs, p-values, IC | Prédictions |
-| **Tests** | t, F, DW, BP | Aucun |
-| **Hypothèses** | Linéarité, homosc., normalité | Aucune |
-| **Interprétation** | β = effet marginal | Feature importance |
-| **Overfitting** | Risque faible (peu de params) | Risque si mal paramétré |
-
-## 🔄 Workflow Entrée → Traitement → Sortie
+##  Workflow (Entrée → Traitement → Sortie)
 
 ```
 INPUT
@@ -179,7 +204,7 @@ OUTPUT
 Tableau comparatif + Graphiques
 ```
 
-## 📊 Importance des Variables (Gini Importance)
+##  Importance des Variables (Gini Importance)
 
 ### Calcul
 
@@ -228,7 +253,7 @@ Interprétation :
 - C'est la variable la plus prédictive
 - `date` est peu informative (4%)
 
-## 🎯 Résultats Attendus
+##  Résultats Attendus
 
 ### Performance Typique
 
@@ -238,23 +263,23 @@ Interprétation :
 | **RMSE** | 55,000-60,000€ | 50,000-55,000€ | 45,000-52,000€ |
 | **MAE** | 40,000-45,000€ | 36,000-40,000€ | 32,000-38,000€ |
 
-### Avantages Random Forest
+### ✅ Avantages Random Forest
 
-✅ **Meilleure précision** : RMSE typiquement 5-15% inférieur à OLS  
-✅ **Capture non-linéarités** : Effet de seuil, rendements décroissants  
-✅ **Interactions automatiques** : surface × type_local sans spécification manuelle  
-✅ **Robustesse** : Peu sensible aux outliers  
-✅ **Pas de multicolinéarité** : Gère surface et nb_pieces corrélés
+ **Meilleure précision** : RMSE typiquement 5-15% inférieur à OLS  
+ **Capture non-linéarités** : Effet de seuil, rendements décroissants  
+ **Interactions automatiques** : surface × type_local sans spécification manuelle  
+ **Robustesse** : Peu sensible aux outliers  
+ **Pas de multicolinéarité** : Gère surface et nb_pieces corrélés
 
-### Inconvénients Random Forest
+### ❌ Inconvénients Random Forest
 
-❌ **Boîte noire** : Difficile d'interpréter un effet marginal précis  
-❌ **Pas de tests statistiques** : Pas de p-value, pas d'intervalle de confiance  
-❌ **Extrapolation** : Ne prédit pas hors de la plage d'entraînement  
-❌ **Overfitting** : Si mal paramétré (arbres trop profonds, peu d'arbres)  
-❌ **Computationnellement coûteux** : Entraînement plus lent que OLS
+ **Boîte noire** : Difficile d'interpréter un effet marginal précis  
+ **Pas de tests statistiques** : Pas de p-value, pas d'intervalle de confiance  
+ **Extrapolation** : Ne prédit pas hors de la plage d'entraînement  
+ **Overfitting** : Si mal paramétré (arbres trop profonds, peu d'arbres)  
+ **Computationnellement coûteux** : Entraînement plus lent que regression lineaire
 
-## 🔍 Comparaison avec OLS
+##  Comparaison avec OLS
 
 ### Quand Utiliser OLS ?
 
@@ -285,37 +310,9 @@ Interprétation :
    → Publier les résultats interprétables
 ```
 
-## 🛠️ Instructions d'Exécution
 
-### Prérequis
 
-Identiques à LinearRegression.ipynb :
-1. Données : `../DataPreprocessing/PreprocessedData/df_grenoble_vente.csv`
-2. Packages : `pip install pandas numpy scikit-learn matplotlib seaborn`
-
-### Exécution
-
-```bash
-cd ModelTraining
-jupyter notebook RandomForest.ipynb
-# Exécuter toutes les cellules
-```
-
-**Temps** : ~1-2 minutes (plus long que OLS, entraînement de 100 arbres)
-
-### Validation
-
-```python
-# Vérifier les modèles entraînés
-for name, model in models.items():
-    r2 = metrics[name]['r2_test']
-    rmse = metrics[name]['rmse_test']
-    print(f"{name}: R²={r2:.3f}, RMSE={rmse:,.0f}€")
-
-# Attendu : R² > 0.75, RMSE < 55,000€
-```
-
-## 🎓 Concepts Machine Learning
+##  Concepts Machine Learning
 
 ### Bias-Variance Tradeoff
 
@@ -378,55 +375,55 @@ model.fit(X, y)
 print(f"OOB R²: {model.oob_score_:.3f}")
 ```
 
-## 📐 Schémas Explicatifs
 
-### Schéma : Construction d'un Random Forest
 
-```
-┌────────────────────────────────────────────────────────────────┐
-│          CONSTRUCTION D'UN RANDOM FOREST (B=3 arbres)           │
-└────────────────────────────────────────────────────────────────┘
+## Packages Utilisés
 
-Dataset Original (n=1288 observations)
-[Obs1, Obs2, Obs3, ..., Obs1288]
-         │
-         │ Bootstrap Sampling (avec remplacement)
-         │
-    ┌────┴────┬────────┬────────┐
-    ▼         ▼        ▼        
-Bootstrap1  Bootstrap2  Bootstrap3
-(n=1288)    (n=1288)    (n=1288)
-    │         │          │
-    │ Certaines obs répétées, d'autres absentes (~37% OOB)
-    │
-    ├─────────┼──────────┤
-    ▼         ▼          ▼
-┌───────┐ ┌───────┐  ┌───────┐
-│ Arbre1│ │ Arbre2│  │ Arbre3│
-│       │ │       │  │       │
-│   •   │ │   •   │  │   •   │ ← Nœud racine
-│  / \  │ │  / \  │  │  / \  │
-│ •   • │ │ •   • │  │ •   • │ ← Nœuds internes
-│/ \ / \│ │/ \ / \│  │/ \ / \│   (splits sur features aléatoires)
-│• • • •│ │• • • •│  │• • • •│ ← Feuilles (prédictions)
-└───────┘ └───────┘  └───────┘
+### scikit-learn
 
-    │         │          │
-    │ Prédiction pour une nouvelle observation x_new
-    │
-    ▼         ▼          ▼
-  250k€     280k€      265k€
-    │         │          │
-    └────┬────┴────┬─────┘
-         │         │
-         ▼         ▼
-    Moyenne : (250+280+265)/3 = 265k€
-              ────────────────────
-                Prédiction finale
+```python
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+from sklearn.preprocessing import StandardScaler
 ```
 
+**Fonctions clés** :
+- `RandomForestRegressor()` : Instanciation du modèle
+- `.fit(X_train, y_train)` : Entraînement
+- `.predict(X_test)` : Prédictions
+- `.feature_importances_` : Importance des variables (Gini importance)
+- `train_test_split()` : Division train/test (80/20)
+- Métriques : RMSE, R², MAE
 ---
+## Instructions d'Exécution
+
+### Prérequis
+
+Identiques à LinearRegression.ipynb :
+1. Données : `../DataPreprocessing/PreprocessedData/df_grenoble_vente.csv`
+2. Packages : `pip install pandas numpy scikit-learn matplotlib seaborn`
+
+### Exécution
+
+```bash
+cd ModelTraining
+jupyter notebook RandomForest.ipynb
+# Exécuter toutes les cellules
+```
+
+
+### Validation
+
+```python
+# Vérifier les modèles entraînés
+for name, model in models.items():
+    r2 = metrics[name]['r2_test']
+    rmse = metrics[name]['rmse_test']
+    print(f"{name}: R²={r2:.3f}, RMSE={rmse:,.0f}€")
+
+# Attendu : R² > 0.75, RMSE < 55,000€
+```
 
 **Version** : 1.0  
-**Dernière mise à jour** : 13 novembre 2025  
-**Auteur** : Projet Économétrie Appliquée
+**Dernière mise à jour** : 14 novembre 2025  
