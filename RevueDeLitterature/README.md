@@ -1,8 +1,8 @@
 # RevueDeLitterature — Fondements Théoriques
 
-## 📋 Résumé Global
+##  Résumé Global
 
-Ce dossier contient la **revue de littérature scientifique** qui fonde théoriquement notre analyse des prix immobiliers. Il rassemble les articles académiques de référence sur la méthode des prix hédoniques (*hedonic pricing*) appliquée au marché immobilier.
+Ce fichier contient la **revue de littérature scientifique** qui fonde théoriquement notre analyse des prix immobiliers. Il rassemble les articles académiques de référence sur la méthode des prix hédoniques (*hedonic pricing*) appliquée au marché immobilier.
 
 ### Rôle dans le Projet
 
@@ -14,28 +14,15 @@ La revue de littérature joue un rôle **crucial** dans toute démarche scientif
 4. **Évolutions** : Identifier les extensions possibles (modèles spatiaux, temporels, ML)
 5. **Crédibilité** : Démontrer la maîtrise du contexte académique
 
-### Pourquoi C'est Utile
+### Pourquoi C'est Utile ?
 
 - **Pour l'étudiant** : Comprendre que notre projet s'inscrit dans une tradition scientifique établie
 - **Pour l'enseignant** : Vérifier que les concepts sont bien compris et correctement appliqués
 - **Pour l'évaluateur** : Juger de la qualité académique du travail (cohérence théorie/pratique)
 
-## 📂 Contenu du Dossier
 
-```
-RevueDeLitterature/
-│
-├── README.md (ce fichier)
-│
-└── HedonicHousingPriceIndexes.pdf
-    │ Type : Article académique (recherche peer-reviewed)
-    │ Thème : Indices de prix hédoniques pour le marché immobilier
-    │ Langue : Anglais
-    │ Pages : Variable selon la publication
-    │ Niveau : Master / Doctorat en économie, économétrie, immobilier
-```
 
-## 📖 HedonicHousingPriceIndexes.pdf
+##  HedonicHousingPriceIndexes.pdf
 
 ### Présentation Générale
 
@@ -402,65 +389,10 @@ Indice hédonique : 190/180 × 100 = 105.6  (hausse réelle de 5.6%)
 **Notre projet** s'inscrit dans cette évolution :
 - ✅ OLS hédonique classique (référence)
 - ✅ Extension ML (Random Forest)
-- ❌ Spatial (pas de coordonnées GPS)
 - ❌ Repeat Sales (données cross-section, pas de panel)
 
-## 🎓 Utilisation Pédagogique
 
-### Pour un Étudiant Débutant
-
-**Lecture Guidée** :
-
-1. **Lire l'introduction** de l'article pour comprendre la problématique
-2. **Se concentrer sur la section méthodologie** : Comment estiment-ils les modèles ?
-3. **Regarder les tableaux de résultats** : Quels coefficients sont significatifs ?
-4. **Conclusion** : Quelles sont les recommandations pratiques ?
-
-**Questions de Compréhension** :
-
-1. Pourquoi utilise-t-on une méthode hédonique plutôt qu'un prix moyen simple ?
-2. Quelle forme fonctionnelle recommandent les auteurs (linéaire, log, log-log) ?
-3. Quelles sont les trois variables les plus importantes pour expliquer le prix ?
-4. Comment construire un indice de prix "à qualité constante" ?
-
-### Pour un Enseignant
-
-**Exercices Suggérés** :
-
-1. **Réplication** : Demander aux étudiants de reproduire une régression hédonique simple
-2. **Comparaison** : Comparer l'indice hédonique avec l'indice naïf sur données simulées
-3. **Critique** : Identifier les limites de la méthode appliquée à notre contexte (Grenoble, 2025)
-4. **Extension** : Proposer des améliorations (variables manquantes, tests supplémentaires)
-
-**Liens avec le Cours** :
-
-- **Régression multiple** : Application concrète avec interprétation économique
-- **Tests d'hypothèses** : Significativité des coefficients, tests de spécification
-- **Indices de prix** : Connexion avec la théorie de l'indice (Laspeyres, Paasche, Fisher)
-- **Économétrie spatiale** : Introduction aux modèles SAR/SEM si cours avancé
-
-### Pour un Évaluateur
-
-**Critères de Qualité** :
-
-✅ **Revue de littérature** :
-- Article de référence cité (Rosen 1974, ou équivalent)
-- Méthode hédonique justifiée théoriquement
-- Comparaison avec d'autres méthodes (Repeat Sales, ML)
-
-✅ **Cohérence méthodologique** :
-- Choix de la forme fonctionnelle argumenté (log-log ici)
-- Variables explicatives standard incluses
-- Tests économétriques appropriés
-
-✅ **Positionnement critique** :
-- Limites reconnues (localisation absente, période courte)
-- Extensions possibles proposées
-- Résultats comparés à la littérature
-
-## 📚 Autres Références Classiques (Non Incluses)
-
-Pour approfondir, consulter :
+##  Autres Références  (Non Incluses)
 
 1. **Rosen, S. (1974)**. *"Hedonic Prices and Implicit Markets: Product Differentiation in Pure Competition"*. Journal of Political Economy, 82(1), 34-55.
    - Fondation théorique de la méthode
@@ -477,7 +409,7 @@ Pour approfondir, consulter :
 5. **Francke, M., & van de Minne, A. (2017)**. *"Land, Structure and Depreciation"*. Real Estate Economics, 45(2), 415-451.
    - Décomposition prix = valeur terrain + valeur structure
 
-## 🔗 Connexion avec Notre Projet
+## Lien avec Notre Projet
 
 ### Tableaux de Correspondance
 
@@ -499,12 +431,8 @@ Pour approfondir, consulter :
 - Forme log-log meilleure que linéaire ✅ R² supérieur de 5pp
 - RMSE ≈ 20-25% du prix moyen ✅ 50k€ / 250k€ = 20%
 
-**Divergences à explorer** :
-- ⚠️ Coefficient de `date` non significatif (attendu car période courte)
-- ⚠️ R² plafonné à 0.78 (localisation absente explique le manque)
 
 ---
 
 **Version** : 1.0  
-**Dernière mise à jour** : 13 novembre 2025  
-**Auteur** : Projet Économétrie Appliquée
+**Dernière mise à jour** : 14 novembre 2025  
