@@ -1,6 +1,6 @@
 # DataPreprocessing — Préparation et Nettoyage des Données DVF
 
-## 📋 Résumé Global
+## Résumé Global
 
 Ce dossier contient le **pipeline complet de prétraitement** des données DVF (Demandes de Valeurs Foncières) pour l'analyse du marché immobilier grenoblois. Il transforme un fichier brut national de 1,4 million de transactions en un dataset propre et exploitable de 1 288 observations prêtes pour la modélisation économétrique.
 
@@ -13,30 +13,28 @@ Le prétraitement constitue la **première étape critique** de toute analyse é
 3. **Transforme** les variables pour la modélisation (encodage, normalisation)
 4. **Exporte** un dataset prêt à l'emploi pour les modèles
 
-### Pourquoi C'est Utile
+### Pourquoi C'est Utile ?
 
 - **Gain de temps** : Les modèles consomment directement `df_grenoble_vente.csv` sans retraiter les données
 - **Reproductibilité** : Toutes les transformations sont documentées et scriptées
 - **Qualité** : Les outliers et erreurs de saisie sont éliminés
 - **Transparence** : Chaque décision de nettoyage est justifiée et traçable
 
-## 📂 Contenu du Dossier
+##  Contenu du Dossier
 
 ```
 DataPreprocessing/
 │
-├── README.md                                   # Ce fichier (documentation complète)
+├── README.md                                   # Ce fichier 
 │
 ├── DataPreparation.ipynb                       # Notebook principal de preprocessing
-│                                               # Langage : Python 3.12
+│                                               # Langage : Python
 │                                               # Format : Jupyter Notebook (.ipynb)
 │                                               # Cellules : 23 (markdown + code)
-│                                               # Temps d'exécution : ~2-3 minutes
 │
 ├── valeursfoncieres-2025-s1.txt.zip            # Données brutes DVF (compressées)
 │                                               # Source : DGFiP / data.gouv.fr
 │                                               # Période : 1er semestre 2025
-│                                               # Taille : ~200 Mo (compressé)
 │                                               # Observations : 1,387,077 mutations nationales
 │                                               # Variables : 43 colonnes
 │                                               # Séparateur : pipe (|)
@@ -45,7 +43,6 @@ DataPreprocessing/
 │   └── df_grenoble_vente.csv                   # Output final
 │                                               # Observations : 1,288
 │                                               # Variables : 7
-│                                               # Encodage : UTF-8
 │                                               # Séparateur : virgule (,)
 │
 └── DataDocumentation/                          # Documentation officielle DVF
@@ -65,7 +62,7 @@ DataPreprocessing/
                                                 # RGPD et protection des données
 ```
 
-## 🔍 DataPreparation.ipynb — Explication Détaillée
+## DataPreparation.ipynb 
 
 ### Vue d'Ensemble du Notebook
 
@@ -110,7 +107,7 @@ Le notebook `DataPreparation.ipynb` est le **cœur du preprocessing**. Il suit u
 [7] Diagnostic des Valeurs Manquantes
      ├─ Calcul du % missing par variable
      ├─ Visualisation (barplot)
-     └─ Décisions de suppression/imputation
+     └─ Décisions de suppression ou imputation
 
 [8] Normalisation des Placeholders
      ├─ Conversion '' → NaN
@@ -158,72 +155,15 @@ Le notebook `DataPreparation.ipynb` est le **cœur du preprocessing**. Il suit u
 [16] Export des Jeux de Données
      ├─ Sauvegarde de df_grenoble_vente.csv
      ├─ 1,288 observations × 7 variables
-     └─ Chemin : ./PreprocessedData/
 
 [17] Conclusion
      └─ Récapitulatif et prochaines étapes
 ```
-
-### Packages Utilisés et Justification
-
-#### Packages Principaux
-
-1. **pandas** (`import pandas as pd`)
-   - **Rôle** : Manipulation de données tabulaires
-   - **Fonctions clés** :
-     - `pd.read_csv()` : Lecture des fichiers DVF
-     - `df.groupby()` : Agrégations par groupe
-     - `df.isna()` : Détection des valeurs manquantes
-     - `df.to_csv()` : Export des résultats
-   - **Pourquoi** : Standard de facto pour l'analyse de données en Python
-
-2. **numpy** (`import numpy as np`)
-   - **Rôle** : Calculs numériques et algèbre linéaire
-   - **Fonctions clés** :
-     - `np.log()` : Transformations logarithmiques
-     - `np.std()` : Écart-type
-     - `np.percentile()` : Calcul des quantiles
-   - **Pourquoi** : Opérations vectorisées (100× plus rapides que boucles Python)
-
-3. **matplotlib.pyplot** (`import matplotlib.pyplot as plt`)
-   - **Rôle** : Visualisations statiques
-   - **Fonctions clés** :
-     - `plt.figure()` : Création de graphiques
-     - `plt.hist()` : Histogrammes
-     - `plt.show()` : Affichage
-   - **Pourquoi** : Contrôle fin des graphiques
-
-4. **seaborn** (`import seaborn as sns`)
-   - **Rôle** : Visualisations statistiques de haut niveau
-   - **Fonctions clés** :
-     - `sns.heatmap()` : Matrice de corrélation
-     - `sns.boxplot()` : Détection des outliers
-     - `sns.set_style()` : Thème graphique
-   - **Pourquoi** : Graphiques prêts à publier, intégration avec pandas
-
-#### Packages Utilitaires
-
-5. **re** (expressions régulières)
-   - **Rôle** : Nettoyage de texte (normalisation des strings)
-   
-6. **typing** (annotations de type)
-   - **Rôle** : Documentation du code, auto-complétion IDE
-
-7. **unicodedata**
-   - **Rôle** : Normalisation des caractères accentués
-   - **Exemple** : "Appartement" et "Appartement" (Unicode différent) → harmonisation
-
-8. **textwrap**
-   - **Rôle** : Formatage des légendes de graphiques
-
-9. **pathlib.Path**
-   - **Rôle** : Gestion des chemins de fichiers (cross-platform)
-
-### Workflow Entrée → Traitement → Sortie
+### Workflow (Entrée → Traitement → Sortie)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                        WORKFLOW DÉTAILLÉ                                 │
+│                        WORKFLOW DÉTAILLÉ                                │
 └─────────────────────────────────────────────────────────────────────────┘
 
 INPUT
@@ -233,8 +173,6 @@ INPUT
 │ Format : TXT délimité par |          │
 │ Lignes : 1,387,077                   │
 │ Colonnes : 43                        │
-│ Encodage : UTF-8                     │
-│ Taille : ~600 Mo (décompressé)       │
 └──────────────────────────────────────┘
             │
             │ pd.read_csv(..., sep='|')
@@ -286,12 +224,12 @@ INPUT
             │ • Imputation surface_terrain = 1 si NaN (appartements)
             │ • Suppression si type_local = NaN
             ▼
-┌──────────────────────────────────────┐
+┌───────────────────────────────────────┐
 │ df_grenoble_vente (sans NaN critiques)│
-│ ─────────────────────                │
-│ Lignes : ~2,000                      │
-│ Variables clés : 100% complètes      │
-└──────────────────────────────────────┘
+│ ─────────────────────                 │
+│ Lignes : ~2,000                       │
+│ Variables clés : 100% complètes       │
+└───────────────────────────────────────┘
             │
             │ ÉTAPE 5 : Normalisation des placeholders
             │ • '' → NaN
@@ -319,9 +257,9 @@ INPUT
             │ • Extraction mois depuis date_mutation
             │ • Création variable 'date' (1-12)
             ▼
-┌──────────────────────────────────────┐
+┌───────────────────────────────────────┐
 │ df_grenoble_vente (features enrichies)│
-└──────────────────────────────────────┘
+└───────────────────────────────────────┘
             │
             │ ÉTAPE 8 : Détection des outliers (IQR)
             │ Pour chaque type_local :
@@ -366,14 +304,319 @@ OUTPUT
 │ ─────────────────────                │
 │ Observations : 1,288                 │
 │ Variables : 7                        │
-│ Encodage : UTF-8                     │
 │ Format : CSV (séparateur virgule)    │
-│ Taille : ~120 Ko                     │
 │ Prêt pour : Modélisation             │
 └──────────────────────────────────────┘
 ```
 
-## 📊 Explication Ligne par Ligne (Extraits Clés)
+##  Schémas Explicatifs
+
+### Schéma 1 : Architecture des Données DVF
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│              STRUCTURE DES DONNÉES DVF (BRUTES)                 │
+└─────────────────────────────────────────────────────────────────┘
+
+        ┌──────────────────────────────────────────────┐
+        │ ValeursFoncieres-2025-S1.txt                 │
+        │ ──────────────────────────────────           │
+        │ Format : Texte délimité par |                │
+        │ 1 ligne = 1 ligne de disposition DVF         │
+        └──────────────────────────────────────────────┘
+                           │
+        ┌──────────────────┴───────────────────────────┐
+        │       43 COLONNES (variables DVF)            │
+        └──────────────────────────────────────────────┘
+                           │
+        ┌──────────────────┴────────────────────────────────────────┐
+        │                         │                                 │
+        ▼                         ▼                                 ▼
+┌────────────────┐      ┌───────────────┐              ┌───────────────────┐
+│ IDENTIFICATION │      │ GÉOGRAPHIQUES │              │  CARACTÉRISTIQUES │
+│ ─────────────  │      │ ───────────── │              │ ────────────────  │
+│ • id_mutation  │      │ • code_commune│              │ • nature_mutation │
+│ • numero_dispo │      │ • nom_commune │              │   (Vente, Don...) │
+│ • date_mutation│      │ • code_postal │              │ • valeur_fonciere │
+│                │      │ • section     │              │   (= price)       │
+│                │      │ • numero_plan │              │ • type_local      │
+│                │      │               │              │ • surface_reelle_ │
+│                │      │               │              │   bati (m²)       │
+│                │      │               │              │ • nombre_pieces_  │
+│                │      │               │              │   principales     │
+│                │      │               │              │ • surface_terrain │
+└────────────────┘      └───────────────┘              └───────────────────┘
+
+Note : Chaque mutation peut concerner plusieurs lots (appartements dans 
+       un même immeuble). D'où la présence de plusieurs lignes avec même 
+       id_mutation mais dispositions différentes.
+```
+
+### Schéma 2 : Pipeline de Nettoyage (Vue Systémique)
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                    PIPELINE DE NETTOYAGE (Vue Systémique)              │
+└────────────────────────────────────────────────────────────────────────┘
+
+[INPUT]  Fichier brut
+         1,387,077 lignes × 43 colonnes
+                │
+                │  PHASE 1 : FILTRAGE
+                │  ═══════════════════
+                ▼
+         ┌──────────────────┐
+         │ Filtre Géographique│──────────► Garde : code_commune = '38185'
+         └──────────────────┘            Rejette : 1,372,077 lignes (98.9%)
+                │
+                ▼
+         15,000 lignes (Grenoble)
+                │
+                │
+         ┌──────────────────┐
+         │ Filtre par Nature│────────────► Garde : nature_mutation = 'Vente'
+         └──────────────────┘             Rejette : Donations, Échanges
+                │
+                ▼
+         2,500 lignes (Ventes)
+                │
+                │  PHASE 2 : SÉLECTION DE VARIABLES
+                │  ═══════════════════════════════════
+                ▼
+         ┌──────────────────┐
+         │ Projection       │────────────► Garde : 6 colonnes pertinentes
+         │ (colonnes)       │              Rejette : 37 colonnes administratives
+         └──────────────────┘
+                │
+                ▼
+         2,500 lignes × 6 colonnes
+                │
+                │  PHASE 3 : GESTION DES MANQUANTS
+                │  ═══════════════════════════════════
+                ▼
+         ┌──────────────────┐
+         │ Imputation       │────────────► surface_terrain NaN → 1.0
+         │                  │              (appartements sans terrain)
+         └──────────────────┘
+                │
+         ┌──────────────────┐
+         │ Suppression      │────────────► Lignes avec NaN sur price,
+         │ (listwise)       │              type_local, surface_bati
+         └──────────────────┘
+                │
+                ▼
+         2,000 lignes
+                │
+                │  PHASE 4 : VALIDATION & CONTRAINTES
+                │  ═══════════════════════════════════════
+                ▼
+         ┌──────────────────┐
+         │ Contraintes      │────────────► Rejette :
+         │ logiques         │              • price ≤ 0 ou > 5M€
+         └──────────────────┘              • surface_bati ≤ 0 ou > 500m²
+                │
+                ▼
+         1,800 lignes
+                │
+                │  PHASE 5 : DÉTECTION DES OUTLIERS
+                │  ═══════════════════════════════════
+                ▼
+         ┌──────────────────┐
+         │ Méthode IQR      │────────────► Par groupe (type_local)
+         │ (par type)       │              Rejette extrêmes (±1.5 IQR)
+         └──────────────────┘
+                │
+                ▼
+         1,288 lignes
+                │
+                │  PHASE 6 : ENRICHISSEMENT
+                │  ═══════════════════════════
+                ▼
+         ┌──────────────────┐
+         │ Feature          │────────────► Ajout :
+         │ Engineering      │              • date (mois extrait)
+         └──────────────────┘              • type_local_1234 (encodage)
+                │
+                ▼
+         1,288 lignes × 7 colonnes
+                │
+                │
+[OUTPUT] df_grenoble_vente.csv
+```
+
+### Schéma 3 : Détection des Outliers (Boxplot Conceptuel)
+
+```
+┌────────────────────────────────────────────────────────────────────┐
+│          MÉTHODE IQR : DÉTECTION DES VALEURS ABERRANTES             │
+└────────────────────────────────────────────────────────────────────┘
+
+   Distribution des prix (exemple : Appartements)
+
+   OUTLIERS
+     (sup)
+       │
+       •  ← 650k€ (transaction exceptionnelle)
+       •  ← 580k€
+       │
+       │
+    ───┼─────────────────────────────────────  ← Upper Fence
+       │                                         (Q3 + 1.5×IQR)
+       │                                         = 520k€
+       │
+       │  ┌─────────────────────────────────┐
+       │  │█████████████████████████████████│ ← Whisker (max dans limites)
+       │  └─────────────────────────────────┘   = 480k€
+       │
+       │  ┌─────────────────────────────────┐
+       │  │█████████████████████████████████│
+   Q3 ─┼──┤█████████████████████████████████├── 75% des données
+       │  │█████████████████████████████████│
+       │  │█████████████████████████████████│
+       │  │                                 │
+       │  │         BOÎTE (IQR)             │
+       │  │                                 │
+  MED ─┼──┼─────────────────────────────────┤── 50% (médiane)
+       │  │                                 │   = 200k€
+       │  │█████████████████████████████████│
+       │  │█████████████████████████████████│
+   Q1 ─┼──┤█████████████████████████████████├── 25% des données
+       │  │█████████████████████████████████│   = 120k€
+       │  └─────────────────────────────────┘
+       │
+       │  ┌─────────────────────────────────┐
+       │  │█████████████████████████████████│ ← Whisker (min dans limites)
+       │  └─────────────────────────────────┘   = 60k€
+       │
+    ───┼─────────────────────────────────────  ← Lower Fence
+       │                                         (Q1 - 1.5×IQR)
+       │                                         = -120k€ → 0€ (borne physique)
+       │
+   OUTLIERS
+     (inf)
+       •  ← 15k€ (garage vendu seul, ou erreur)
+       │
+
+Légende :
+  Q1 = Premier quartile (25e percentile)
+  Q3 = Troisième quartile (75e percentile)
+  IQR = Q3 - Q1 (Interquartile Range)
+  Whiskers = Extensions jusqu'aux valeurs extrêmes NON-outliers
+  • = Outliers détectés (en dehors des fences)
+
+Action : Les outliers sont retirés du dataset final
+```
+
+### Schéma 4 : Workflow Décisionnel (Valeurs Manquantes)
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│      ARBRE DE DÉCISION : GESTION DES VALEURS MANQUANTES        │
+└────────────────────────────────────────────────────────────────┘
+
+                        Variable avec NaN détectée
+                                    │
+                  ┌─────────────────┴─────────────────┐
+                  ▼                                   ▼
+       Variable CLEF ?                       Variable SECONDAIRE ?
+       (price, surface_bati,                 (surface_terrain,
+        type_local)                          date_mutation)
+                  │                                   │
+         ┌────────┴────────┐                ┌────────┴────────┐
+         ▼                 ▼                ▼                 ▼
+   % NaN < 5% ?     % NaN ≥ 5% ?     % NaN < 30% ?    % NaN ≥ 30% ?
+         │                 │                │                 │
+         │                 │                │                 │
+         ▼                 ▼                ▼                 ▼
+   ┌──────────┐     ┌──────────┐     ┌───────────┐     ┌──────────┐
+   │ Supprimer│     │ Supprimer│     │  Imputer  │     │ Supprimer│
+   │ la ligne │     │ la ligne │     │  (médiane │     │la colonne│
+   │ (listwise│     │ (listwise│     │  ou valeur│     │          │
+   │ deletion)│     │ deletion)│     │par défaut)│     │          │
+   └──────────┘     └──────────┘     └───────────┘     └──────────┘
+         │                 │                │                 │
+         └─────────────────┴────────────────┴─────────────────┘
+                                    │
+                                    ▼
+                      Dataset nettoyé (sans NaN critiques)
+
+Exemples appliqués à notre dataset :
+────────────────────────────────────────────────────────────────
+1. price NaN → SUPPRIMER (variable clef, non imputable)
+2. surface_bati NaN → SUPPRIMER (clef, corrélée avec prix)
+3. surface_terrain NaN (appartements) → IMPUTER à 1 m²
+   (valeur symbolique, non-clef, 60% NaN)
+4. type_local NaN → SUPPRIMER (clef catégorielle, pas de mode évident)
+5. date_mutation NaN → SUPPRIMER (peu de cas, clef temporelle)
+```
+
+##  Données en Sortie : df_grenoble_vente.csv
+
+### Dictionnaire des Variables
+
+| Variable | Type | Description | Unité | Valeurs | Statistiques |
+|----------|------|-------------|-------|---------|--------------|
+| **price** | `float` | Prix de vente (valeur foncière) | Euros (€) | [5,000 - 950,000] | μ = 245k, σ = 125k |
+| **type_local** | `object` (string) | Type de bien immobilier | Catégoriel | {Appartement, Maison, Local industriel..., Dépendance} | 85% Appartements |
+| **surface_bati** | `float` | Surface bâtie (loi Carrez) | m² | [10 - 300] | μ = 62, σ = 35 |
+| **surface_terrain** | `float` | Surface de terrain privé | m² | [1 - 5000] | μ = 150, médiane = 1 |
+| **date** | `int` | Mois de la transaction | 1-12 | [1=Jan, 12=Déc] | Uniform (données S1) |
+| **nb_pieces** | `int` | Nombre de pièces principales | Entier ≥ 0 | [0 - 8] | μ = 2.5, médiane = 2 |
+| **type_local_1234** | `int` | Encodage numérique de type_local | 1-4 | 1=Appart, 2=Maison, 3=Local, 4=Dép | - |
+
+### Type de Données
+
+**Classification** : **Cross-section** (coupe transversale)
+
+- **Définition** : Observations de multiples unités (ici, transactions immobilières) à un instant donné (ou période courte)
+- **Caractéristiques** :
+  - Pas de dimension temporelle exploitable (6 mois seulement)
+  - Indépendance des observations (chaque transaction est unique)
+  - Pas d'autocorrélation temporelle (contrairement aux séries temporelles)
+
+
+### Unités et Périodes
+
+- **Unité d'observation** : Une transaction immobilière (mutation)
+- **Unité géographique** : Commune de Grenoble (38185)
+- **Période** : 1er semestre 2025 (janvier-juin)
+
+
+
+### Nettoyage Appliqué
+
+**Résumé des opérations** :
+1. Filtrage géographique : 1,387,077 → 15,000 obs
+2. Filtrage par nature : 15,000 → 2,500 obs (ventes uniquement)
+3. Suppression des NaN critiques : 2,500 → 2,000 obs
+4. Filtrage des aberrations (prix/surfaces illogiques) : 2,000 → 1,800 obs
+5. Retrait des outliers (IQR par type) : 1,800 → 1,288 obs
+
+**Taux de rétention** : 1,288 / 15,000 = **8.6%**
+- Peut sembler faible, mais normal :
+  - Beaucoup de donations/échanges (non pertinents)
+  - Valeurs manquantes sur variables clés
+  - Erreurs de saisie fréquentes dans bases administratives
+    
+### Sources et Traçabilité
+
+**Source primaire** : 
+- Base DVF (Demandes de Valeurs Foncières)
+- Producteur : Direction Générale des Finances Publiques (DGFiP)
+- Mise à disposition : Etalab / data.gouv.fr
+- Licence : Licence Ouverte / Open Licence
+- URL : https://www.data.gouv.fr/fr/datasets/demandes-de-valeurs-foncieres/
+
+**Processus de collecte** :
+1. Actes notariés de mutation immobilière
+2. Enregistrement aux services de publicité foncière
+3. Extraction par la DGFiP (semi-annuelle)
+4. Anonymisation (suppression des noms, adresses précises)
+5. Publication en open data
+
+
+
+##  Explication Ligne par Ligne du code avec justification (Extraits Clés)
 
 ### Section 2 : Chargement des Données
 
@@ -385,7 +628,6 @@ df = pd.read_csv("ValeursFoncieres-2025-S1.txt", sep="|")
 **Explication** :
 - `pd.read_csv()` : Fonction pandas pour lire un fichier délimité
 - `sep="|"` : Le fichier DVF utilise le pipe comme séparateur (non standard mais fréquent dans les bases administratives)
-- **Pourquoi pas Excel ?** Les fichiers DVF sont trop volumineux (1,4M lignes dépassent la limite Excel de 1M)
 
 **Avertissement** :
 ```
@@ -409,11 +651,6 @@ df_grenoble = df[df['code_commune'] == '38185'].copy()
   - Format : 38 (Isère) + 185 (numéro commune)
   - Invariant dans le temps (contrairement au nom qui peut changer)
 
-**Alternatives** :
-- Filtrage par nom : `df['nom_commune'] == 'GRENOBLE'`
-  - ❌ Risqué : sensible à la casse, accents, espaces
-- Filtrage par code postal : `df['code_postal'] == '38000'`
-  - ❌ Insuffisant : Grenoble a plusieurs codes postaux (38000, 38100)
 
 ### Section 7 : Diagnostic des Valeurs Manquantes
 
@@ -537,14 +774,14 @@ Appartements à Grenoble :
                 │                                    │
                 │                                    │
         max →   ├────────────────────────────────────┤  ← upper bound (520k€)
-                │xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx │
-                │xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx │
-         Q3 →   ├──────────────────────────────────┤  (280k€)
-                │xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx │
-    médiane →   ├──────────────────────────────────┤  (200k€)
-                │xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx │
-         Q1 →   ├──────────────────────────────────┤  (120k€)
-                │xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx │
+                │xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx│
+                │xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx│
+         Q3 →   ├────────────────────────────────────┤  (280k€)
+                │xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx│
+    médiane →   ├────────────────────────────────────┤  (200k€)
+                │xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx│
+         Q1 →   ├────────────────────────────────────┤  (120k€)
+                │xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx│
         min →   ├────────────────────────────────────┤  ← lower bound (0€)
                 │
                 │
@@ -572,7 +809,6 @@ df_grenoble_vente['type_local_1234'] = df_grenoble_vente['type_local'].map(type_
 - Alternative : One-Hot Encoding (variable binaire par catégorie)
   - Exemple : type_appart=1, type_maison=0, type_local=0, type_dep=0
   - Avantage : pas d'ordre implicite
-  - Inconvénient : + de colonnes (curse of dimensionality)
 
 **Ordre choisi** :
 - 1 = Appartement (le plus fréquent, référence)
@@ -580,10 +816,6 @@ df_grenoble_vente['type_local_1234'] = df_grenoble_vente['type_local'].map(type_
 - 3 = Local commercial (logique économique différente)
 - 4 = Dépendance (valorisation faible)
 
-**Risque** : Impose un ordre ordinal (1 < 2 < 3 < 4)
-- Acceptable pour la régression linéaire (on estime des coefficients de décalage)
-- Peut biaiser les arbres de décision (splits sur 1 vs 2 vs 3)
-- Solution alternative : One-Hot si problème détecté
 
 ### Section 15 : Matrice de Corrélation
 
@@ -629,578 +861,67 @@ Si deux variables X1 et X2 sont fortement corrélées (|r| > 0.9) :
 **Solutions** :
 1. Retirer une des deux variables (ex: garder surface_bati, retirer nb_pieces)
 2. Créer une variable composite (ex: surface_par_piece = surface_bati / nb_pieces)
-3. Régularisation (Ridge, Lasso) qui pénalise les coefficients élevés
 
-## 📂 Données en Sortie : df_grenoble_vente.csv
 
-### Dictionnaire des Variables
+### PArtie technique et informatique (Packages Utilisés et Justification)
 
-| Variable | Type | Description | Unité | Valeurs | Statistiques |
-|----------|------|-------------|-------|---------|--------------|
-| **price** | `float64` | Prix de vente (valeur foncière) | Euros (€) | [5,000 - 950,000] | μ = 245k, σ = 125k |
-| **type_local** | `object` (string) | Type de bien immobilier | Catégoriel | {Appartement, Maison, Local industriel..., Dépendance} | 85% Appartements |
-| **surface_bati** | `float64` | Surface bâtie (loi Carrez) | m² | [10 - 300] | μ = 62, σ = 35 |
-| **surface_terrain** | `float64` | Surface de terrain privé | m² | [1 - 5000] | μ = 150, médiane = 1 |
-| **date** | `int64` | Mois de la transaction | 1-12 | [1=Jan, 12=Déc] | Uniform (données S1) |
-| **nb_pieces** | `int64` | Nombre de pièces principales | Entier ≥ 0 | [0 - 8] | μ = 2.5, médiane = 2 |
-| **type_local_1234** | `int64` | Encodage numérique de type_local | 1-4 | 1=Appart, 2=Maison, 3=Local, 4=Dép | - |
+#### Packages Principaux
 
-### Type de Données
+1. **pandas** (`import pandas as pd`)
+   - **Rôle** : Manipulation de données tabulaires
+   - **Fonctions clés** :
+     - `pd.read_csv()` : Lecture des fichiers DVF
+     - `df.groupby()` : Agrégations par groupe
+     - `df.isna()` : Détection des valeurs manquantes
+     - `df.to_csv()` : Export des résultats
+   - **Pourquoi** : Standard de facto pour l'analyse de données en Python
 
-**Classification** : **Cross-section** (coupe transversale)
+2. **numpy** (`import numpy as np`)
+   - **Rôle** : Calculs numériques et algèbre linéaire
+   - **Fonctions clés** :
+     - `np.log()` : Transformations logarithmiques
+     - `np.std()` : Écart-type
+     - `np.percentile()` : Calcul des quantiles
+   - **Pourquoi** : Opérations vectorisées (100× plus rapides que boucles Python)
 
-- **Définition** : Observations de multiples unités (ici, transactions immobilières) à un instant donné (ou période courte)
-- **Caractéristiques** :
-  - Pas de dimension temporelle exploitable (6 mois seulement)
-  - Indépendance des observations (chaque transaction est unique)
-  - Pas d'autocorrélation temporelle (contrairement aux séries temporelles)
+3. **matplotlib.pyplot** (`import matplotlib.pyplot as plt`)
+   - **Rôle** : Visualisations statiques
+   - **Fonctions clés** :
+     - `plt.figure()` : Création de graphiques
+     - `plt.hist()` : Histogrammes
+     - `plt.show()` : Affichage
+   - **Pourquoi** : Contrôle fin des graphiques
 
-**Distinction avec d'autres types** :
-- ❌ **Série temporelle** : Une seule unité observée sur plusieurs périodes (ex: prix moyen mensuel sur 10 ans)
-- ❌ **Panel (données longitudinales)** : Plusieurs unités sur plusieurs périodes (ex: prix de 100 biens suivis sur 5 ans)
+4. **seaborn** (`import seaborn as sns`)
+   - **Rôle** : Visualisations statistiques de haut niveau
+   - **Fonctions clés** :
+     - `sns.heatmap()` : Matrice de corrélation
+     - `sns.boxplot()` : Détection des outliers
+     - `sns.set_style()` : Thème graphique
+   - **Pourquoi** : Graphiques prêts à publier, intégration avec pandas
 
-### Unités et Périodes
+#### Packages Utilitaires
 
-- **Unité d'observation** : Une transaction immobilière (mutation)
-- **Unité géographique** : Commune de Grenoble (38185)
-- **Période** : 1er semestre 2025 (janvier-juin)
-- **Fréquence** : Événementielle (dates irrégulières, agrégées en mois)
+5. **re** (expressions régulières)
+   - **Rôle** : Nettoyage de texte (normalisation des strings)
+   
+6. **typing** (annotations de type)
+   - **Rôle** : Documentation du code, auto-complétion IDE
 
-### Sources et Traçabilité
+7. **unicodedata**
+   - **Rôle** : Normalisation des caractères accentués
+   - **Exemple** : "Appartement" et "Appartement" (Unicode différent) → harmonisation
 
-**Source primaire** : 
-- Base DVF (Demandes de Valeurs Foncières)
-- Producteur : Direction Générale des Finances Publiques (DGFiP)
-- Mise à disposition : Etalab / data.gouv.fr
-- Licence : Licence Ouverte / Open Licence
-- URL : https://www.data.gouv.fr/fr/datasets/demandes-de-valeurs-foncieres/
+8. **textwrap**
+   - **Rôle** : Formatage des légendes de graphiques
 
-**Processus de collecte** :
-1. Actes notariés de mutation immobilière
-2. Enregistrement aux services de publicité foncière
-3. Extraction par la DGFiP (semi-annuelle)
-4. Anonymisation (suppression des noms, adresses précises)
-5. Publication en open data
+9. **pathlib.Path**
+   - **Rôle** : Gestion des chemins de fichiers (cross-platform)
 
-### Nettoyage Appliqué
 
-**Résumé des opérations** :
-1. ✅ Filtrage géographique : 1,387,077 → 15,000 obs
-2. ✅ Filtrage par nature : 15,000 → 2,500 obs (ventes uniquement)
-3. ✅ Suppression des NaN critiques : 2,500 → 2,000 obs
-4. ✅ Filtrage des aberrations (prix/surfaces illogiques) : 2,000 → 1,800 obs
-5. ✅ Retrait des outliers (IQR par type) : 1,800 → 1,288 obs
 
-**Taux de rétention** : 1,288 / 15,000 = **8.6%**
-- Peut sembler faible, mais normal :
-  - Beaucoup de donations/échanges (non pertinents)
-  - Valeurs manquantes sur variables clés
-  - Erreurs de saisie fréquentes dans bases administratives
-
-### Limites et Biais Possibles
-
-#### 1. Biais de Sélection
-- **Problème** : On ne garde que les transactions avec données complètes
-- **Conséquence** : Peut sur-représenter certains types de biens (ex: appartements neufs avec toutes infos vs vieux locaux mal renseignés)
-- **Mitigation** : Vérifier la distribution type_local avant/après nettoyage
-
-#### 2. Valeurs Manquantes Non Aléatoires (MNAR)
-- **Problème** : Les données manquantes peuvent être corrélées avec le prix
-  - Ex: Biens sans surface renseignée = petites transactions négligées
-- **Conséquence** : Estimations biaisées si suppression naïve
-- **Mitigation** : Imputation prudente (surface_terrain=1 pour appartements)
-
-#### 3. Agrégation Temporelle
-- **Problème** : Variable `date` = mois (perte d'information sur le jour exact)
-- **Conséquence** : Impossible de capturer des variations intra-mensuelles
-- **Impact** : Faible (prix immobiliers varient lentement)
-
-#### 4. Absence de Variables de Localisation Fine
-- **Problème** : Pas d'adresse précise, quartier, distance au centre
-- **Conséquence** : Prix hédonique incomplet (l'emplacement est critique)
-- **Impact** : R² limité (~0.70 au lieu de >0.85 avec géolocalisation)
-- **Solutions** :
-  - Ajouter coordonnées GPS (si disponibles dans colonnes DVF ignorées)
-  - Joindre avec base d'aménités (écoles, transports)
-
-#### 5. Censure à Droite (Outliers Retirés)
-- **Problème** : On retire les biens > seuil IQR
-- **Conséquence** : Modèles peu fiables pour prédire biens haut de gamme
-- **Mitigation** : Modéliser séparément le segment luxe, ou utiliser quantile regression
-
-#### 6. Période Courte (6 mois)
-- **Problème** : Pas assez de recul pour tendance temporelle
-- **Conséquence** : Variable `date` peu informative
-- **Solution** : Élargir à plusieurs années si analyse tendancielle nécessaire
-
-## 🛠️ Instructions d'Exécution
-
-### Étape 0 : Vérification des Prérequis
-
-```bash
-# Vérifier la version de Python (≥ 3.8 requis)
-python --version
-# Attendu : Python 3.8.x ou supérieur
-
-# Vérifier que Jupyter est installé
-jupyter --version
-# Si absent : pip install jupyter
-```
-
-### Étape 1 : Extraction des Données Brutes
-
-```bash
-# Se placer dans le dossier DataPreprocessing
-cd /chemin/vers/ProjetEconometrie/DataPreprocessing
-
-# Extraire le fichier zip
-unzip valeursfoncieres-2025-s1.txt.zip
-
-# Vérifier que le fichier .txt est présent
-ls -lh ValeursFoncieres-2025-S1.txt
-# Attendu : ~600 Mo
-```
-
-### Étape 2 : Installation des Packages
-
-```bash
-# Créer un environnement virtuel (recommandé)
-python -m venv venv_econometrie
-source venv_econometrie/bin/activate  # Linux/Mac
-# OU
-venv_econometrie\Scripts\activate  # Windows
-
-# Installer les dépendances
-pip install pandas numpy matplotlib seaborn jupyter
-
-# Vérifier les versions
-pip list | grep -E "pandas|numpy|matplotlib|seaborn"
-```
-
-**Versions recommandées** (compatibilité testée) :
-```
-pandas==2.3.2
-numpy==2.3.3
-matplotlib==3.5+
-seaborn==0.12+
-```
-
-### Étape 3 : Lancement du Notebook
-
-```bash
-# Démarrer Jupyter Notebook
-jupyter notebook DataPreparation.ipynb
-
-# OU avec JupyterLab (interface moderne)
-jupyter lab DataPreparation.ipynb
-```
-
-**Navigation dans le notebook** :
-1. Le notebook s'ouvre dans votre navigateur
-2. Exécuter les cellules dans l'ordre :
-   - **Shift + Enter** : Exécuter la cellule courante et passer à la suivante
-   - **Ctrl + Enter** : Exécuter sans avancer
-   - Menu "Cell > Run All" : Tout exécuter d'un coup
-
-### Étape 4 : Exécution Complète
-
-**Temps estimé** : 2-3 minutes (selon puissance machine)
-
-**Ordre strict** :
-1. Section 1 : Importations (instant)
-2. Section 2 : Chargement données brutes (**~30 secondes** - fichier lourd)
-3. Sections 3-15 : Transformations (quelques secondes chacune)
-4. Section 16 : Export (~5 secondes)
-
-**Indicateurs de succès** :
-- Pas de `FileNotFoundError` (données présentes)
-- Pas de `ModuleNotFoundError` (packages installés)
-- Output section 16 :
-  ```
-  Saved: /chemin/.../PreprocessedData/df_grenoble_vente.csv (rows=1288)
-  ```
-
-### Étape 5 : Vérification du Résultat
-
-```bash
-# Vérifier la création du fichier CSV
-ls -lh PreprocessedData/
-# Attendu : df_grenoble_vente.csv (~120 Ko)
-
-# Afficher les premières lignes
-head PreprocessedData/df_grenoble_vente.csv
-
-# Compter les lignes (doit être 1289 = 1288 données + 1 header)
-wc -l PreprocessedData/df_grenoble_vente.csv
-```
-
-**Validation** :
-```python
-# Ouvrir un terminal Python
-python
-
->>> import pandas as pd
->>> df = pd.read_csv('PreprocessedData/df_grenoble_vente.csv')
->>> print(df.shape)
-(1288, 7)  # ✅ Correct
-
->>> print(df.columns.tolist())
-['price', 'type_local', 'surface_bati', 'surface_terrain', 
- 'date', 'nb_pieces', 'type_local_1234']  # ✅ Correct
-
->>> print(df['price'].describe())
-# Vérifier que min > 0, max < 1M, mean ~250k
-```
-
-### Chemins de Fichiers à Respecter
-
-**Structure attendue** :
-```
-ProjetEconometrie/
-└── DataPreprocessing/
-    ├── DataPreparation.ipynb         ← Notebook à exécuter ICI
-    ├── ValeursFoncieres-2025-S1.txt  ← Données brutes (après unzip)
-    └── PreprocessedData/              ← Dossier créé automatiquement
-        └── df_grenoble_vente.csv      ← Output généré
-```
-
-**Chemins relatifs dans le code** :
-- Le notebook utilise `Path.cwd()` pour détecter le dossier courant
-- Les chemins sont relatifs : `./PreprocessedData/`
-- ✅ **Portable** : fonctionne quel que soit l'emplacement du projet
-
-**Si erreur de chemin** :
-```python
-# Dans le notebook, vérifier le working directory
-from pathlib import Path
-print(Path.cwd())
-
-# Doit afficher : .../ProjetEconometrie/DataPreprocessing
-# Si différent : changer de dossier ou ajuster les chemins
-```
-
-## 📐 Schémas Explicatifs
-
-### Schéma 1 : Architecture des Données DVF
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│              STRUCTURE DES DONNÉES DVF (BRUTES)                  │
-└─────────────────────────────────────────────────────────────────┘
-
-        ┌──────────────────────────────────────────────┐
-        │ ValeursFoncieres-2025-S1.txt                 │
-        │ ──────────────────────────────────           │
-        │ Format : Texte délimité par |                │
-        │ Encodage : UTF-8                             │
-        │ 1 ligne = 1 ligne de disposition DVF         │
-        │   (≠ 1 transaction, car multi-lots possible) │
-        └──────────────────────────────────────────────┘
-                           │
-        ┌──────────────────┴───────────────────────────┐
-        │       43 COLONNES (variables DVF)             │
-        └──────────────────────────────────────────────┘
-                           │
-        ┌──────────────────┴──────────────────────────────────────┐
-        │                                                          │
-        ▼                         ▼                                ▼
-┌───────────────┐      ┌───────────────┐              ┌────────────────┐
-│ IDENTIFICATION│      │ GÉOGRAPHIQUES │              │ CARACTÉRISTIQUES│
-│ ─────────────│      │ ───────────── │              │ ────────────────│
-│ • id_mutation │      │ • code_commune│              │ • nature_mutation│
-│ • numero_dispo│      │ • nom_commune │              │   (Vente, Don...) │
-│ • date_mutation│     │ • code_postal │              │ • valeur_fonciere│
-│               │      │ • section     │              │   (= price)      │
-│               │      │ • numero_plan │              │ • type_local     │
-│               │      │               │              │ • surface_reelle_│
-│               │      │               │              │   bati (m²)      │
-│               │      │               │              │ • nombre_pieces_ │
-│               │      │               │              │   principales    │
-│               │      │               │              │ • surface_terrain│
-└───────────────┘      └───────────────┘              └────────────────┘
-
-Note : Chaque mutation peut concerner plusieurs lots (appartements dans 
-       un même immeuble). D'où la présence de plusieurs lignes avec même 
-       id_mutation mais dispositions différentes.
-```
-
-### Schéma 2 : Pipeline de Nettoyage (Vue Systémique)
-
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                    PIPELINE DE NETTOYAGE (Vue Systémique)               │
-└────────────────────────────────────────────────────────────────────────┘
-
-[INPUT]  Fichier brut
-         1,387,077 lignes × 43 colonnes
-         ~600 Mo
-                │
-                │  PHASE 1 : FILTRAGE
-                │  ═══════════════════
-                ▼
-         ┌──────────────────┐
-         │ Filtre Géographique│──────────► Garde : code_commune = '38185'
-         └──────────────────┘            Rejette : 1,372,077 lignes (98.9%)
-                │
-                ▼
-         15,000 lignes (Grenoble)
-                │
-                │
-         ┌──────────────────┐
-         │ Filtre par Nature│────────────► Garde : nature_mutation = 'Vente'
-         └──────────────────┘             Rejette : Donations, Échanges
-                │
-                ▼
-         2,500 lignes (Ventes)
-                │
-                │  PHASE 2 : SÉLECTION DE VARIABLES
-                │  ═══════════════════════════════════
-                ▼
-         ┌──────────────────┐
-         │ Projection       │────────────► Garde : 6 colonnes pertinentes
-         │ (colonnes)       │              Rejette : 37 colonnes administratives
-         └──────────────────┘
-                │
-                ▼
-         2,500 lignes × 6 colonnes
-                │
-                │  PHASE 3 : GESTION DES MANQUANTS
-                │  ═══════════════════════════════════
-                ▼
-         ┌──────────────────┐
-         │ Imputation       │────────────► surface_terrain NaN → 1.0
-         │                  │              (appartements sans terrain)
-         └──────────────────┘
-                │
-         ┌──────────────────┐
-         │ Suppression      │────────────► Lignes avec NaN sur price,
-         │ (listwise)       │              type_local, surface_bati
-         └──────────────────┘
-                │
-                ▼
-         2,000 lignes
-                │
-                │  PHASE 4 : VALIDATION & CONTRAINTES
-                │  ═══════════════════════════════════════
-                ▼
-         ┌──────────────────┐
-         │ Contraintes      │────────────► Rejette :
-         │ logiques         │              • price ≤ 0 ou > 5M€
-         └──────────────────┘              • surface_bati ≤ 0 ou > 500m²
-                │
-                ▼
-         1,800 lignes
-                │
-                │  PHASE 5 : DÉTECTION DES OUTLIERS
-                │  ═══════════════════════════════════
-                ▼
-         ┌──────────────────┐
-         │ Méthode IQR      │────────────► Par groupe (type_local)
-         │ (par type)       │              Rejette extrêmes (±1.5 IQR)
-         └──────────────────┘
-                │
-                ▼
-         1,288 lignes
-                │
-                │  PHASE 6 : ENRICHISSEMENT
-                │  ═══════════════════════════
-                ▼
-         ┌──────────────────┐
-         │ Feature          │────────────► Ajout :
-         │ Engineering      │              • date (mois extrait)
-         └──────────────────┘              • type_local_1234 (encodage)
-                │
-                ▼
-         1,288 lignes × 7 colonnes
-                │
-                │
-[OUTPUT] df_grenoble_vente.csv
-         Format CSV, UTF-8
-         ~120 Ko
-```
-
-### Schéma 3 : Détection des Outliers (Boxplot Conceptuel)
-
-```
-┌────────────────────────────────────────────────────────────────────┐
-│          MÉTHODE IQR : DÉTECTION DES VALEURS ABERRANTES             │
-└────────────────────────────────────────────────────────────────────┘
-
-   Distribution des prix (exemple : Appartements)
-
-   OUTLIERS
-     (sup)
-       │
-       •  ← 650k€ (transaction exceptionnelle)
-       •  ← 580k€
-       │
-       │
-    ───┼─────────────────────────────────────  ← Upper Fence
-       │                                         (Q3 + 1.5×IQR)
-       │                                         = 520k€
-       │
-       │  ┌─────────────────────────────────┐
-       │  │█████████████████████████████████│ ← Whisker (max dans limites)
-       │  └─────────────────────────────────┘   = 480k€
-       │
-       │  ┌─────────────────────────────────┐
-       │  │█████████████████████████████████│
-   Q3 ─┼──┤█████████████████████████████████├── 75% des données
-       │  │█████████████████████████████████│
-       │  │█████████████████████████████████│
-       │  │                                 │
-       │  │         BOÎTE (IQR)             │
-       │  │                                 │
-  MED ─┼──┼─────────────────────────────────┤── 50% (médiane)
-       │  │                                 │   = 200k€
-       │  │█████████████████████████████████│
-       │  │█████████████████████████████████│
-   Q1 ─┼──┤█████████████████████████████████├── 25% des données
-       │  │█████████████████████████████████│   = 120k€
-       │  └─────────────────────────────────┘
-       │
-       │  ┌─────────────────────────────────┐
-       │  │█████████████████████████████████│ ← Whisker (min dans limites)
-       │  └─────────────────────────────────┘   = 60k€
-       │
-    ───┼─────────────────────────────────────  ← Lower Fence
-       │                                         (Q1 - 1.5×IQR)
-       │                                         = -120k€ → 0€ (borne physique)
-       │
-   OUTLIERS
-     (inf)
-       •  ← 15k€ (garage vendu seul, ou erreur)
-       │
-
-Légende :
-  Q1 = Premier quartile (25e percentile)
-  Q3 = Troisième quartile (75e percentile)
-  IQR = Q3 - Q1 (Interquartile Range)
-  Whiskers = Extensions jusqu'aux valeurs extrêmes NON-outliers
-  • = Outliers détectés (en dehors des fences)
-
-Action : Les outliers sont retirés du dataset final
-```
-
-### Schéma 4 : Workflow Décisionnel (Valeurs Manquantes)
-
-```
-┌────────────────────────────────────────────────────────────────┐
-│      ARBRE DE DÉCISION : GESTION DES VALEURS MANQUANTES         │
-└────────────────────────────────────────────────────────────────┘
-
-                        Variable avec NaN détectée
-                                    │
-                  ┌─────────────────┴─────────────────┐
-                  ▼                                   ▼
-       Variable CLEF ?                       Variable SECONDAIRE ?
-       (price, surface_bati,                 (surface_terrain,
-        type_local)                          date_mutation)
-                  │                                   │
-         ┌────────┴────────┐                ┌────────┴────────┐
-         ▼                 ▼                ▼                 ▼
-   % NaN < 5% ?     % NaN ≥ 5% ?     % NaN < 30% ?    % NaN ≥ 30% ?
-         │                 │                │                 │
-         │                 │                │                 │
-         ▼                 ▼                ▼                 ▼
-   ┌──────────┐     ┌──────────┐     ┌──────────┐     ┌──────────┐
-   │ Supprimer│     │ Supprimer│     │  Imputer │     │ Supprimer│
-   │ la ligne │     │ la ligne │     │  (médiane│     │ la colonne│
-   │ (listwise│     │ (listwise│     │  ou valeur│    │          │
-   │ deletion)│     │ deletion)│     │  par défaut)│   │          │
-   └──────────┘     └──────────┘     └──────────┘     └──────────┘
-         │                 │                │                 │
-         └─────────────────┴────────────────┴─────────────────┘
-                                    │
-                                    ▼
-                      Dataset nettoyé (sans NaN critiques)
-
-Exemples appliqués à notre dataset :
-────────────────────────────────────────────────────────────────
-1. price NaN → SUPPRIMER (variable clef, non imputable)
-2. surface_bati NaN → SUPPRIMER (clef, corrélée avec prix)
-3. surface_terrain NaN (appartements) → IMPUTER à 1 m²
-   (valeur symbolique, non-clef, 60% NaN)
-4. type_local NaN → SUPPRIMER (clef catégorielle, pas de mode évident)
-5. date_mutation NaN → SUPPRIMER (peu de cas, clef temporelle)
-```
-
-## 🎓 Utilisation Pédagogique
-
-### Pour un Étudiant Débutant
-
-**Exercices Suggérés** :
-
-1. **Exploration guidée** :
-   - Exécuter le notebook cellule par cellule
-   - À chaque étape, prédire le nombre de lignes restantes
-   - Vérifier avec `print(len(df))`
-
-2. **Modification des seuils** :
-   - Changer le seuil IQR de 1.5 à 2.0 : combien d'observations en plus ?
-   - Changer la borne supérieure de prix de 5M€ à 3M€ : impact ?
-
-3. **Ajout de visualisations** :
-   - Histogramme de la distribution des prix avant/après nettoyage
-   - Scatter plot prix vs surface_bati
-   - Boxplot des prix par type de bien
-
-4. **Questions de compréhension** :
-   - Pourquoi filtrer uniquement Grenoble et pas l'agglomération ?
-   - Pourquoi imputer surface_terrain à 1 et pas à 0 ou NaN ?
-   - Quelle est la différence entre médiane et moyenne pour le prix ?
-
-### Pour un Enseignant
-
-**Points Clés à Mettre en Avant** :
-
-1. **Importance du prétraitement** :
-   - 80% du temps d'un data scientist est consacré au nettoyage
-   - "Garbage in, garbage out" : des données sales → des modèles biaisés
-
-2. **Choix Méthodologiques** :
-   - IQR vs Z-score pour les outliers : avantages/inconvénients
-   - Listwise deletion vs imputation : biais potentiels
-   - Encodage ordinal vs one-hot : implications pour la modélisation
-
-3. **Validation de la Pipeline** :
-   - Toujours vérifier les dimensions à chaque étape
-   - Visualiser les distributions avant/après transformation
-   - Documenter chaque décision (reproductibilité)
-
-4. **Exercices Avancés pour Étudiants** :
-   - Implémenter une imputation par régression (surface_terrain ~ surface_bati + type_local)
-   - Tester d'autres méthodes de détection d'outliers (Isolation Forest, DBSCAN)
-   - Comparer les performances des modèles avec/sans retrait d'outliers
-
-### Pour un Évaluateur
-
-**Critères de Qualité Technique** :
-
-✅ **Code** :
-- Structuré en sections logiques (17 étapes claires)
-- Commenté (markdown + docstrings)
-- Pas de hard-coding (utilisation de Path, variables configurables)
-
-✅ **Méthodologie** :
-- Justification des seuils (IQR, bornes de prix)
-- Gestion rigoureuse des NaN (diagnostic → décision → action)
-- Validation à chaque étape (prints, asserts)
-
-✅ **Reproductibilité** :
-- Chemins relatifs (pas de `/home/hamlil/...`)
-- Seed aléatoire si besoin (non applicable ici, pas de ML)
-- Documentation complète
-
-✅ **Qualité des Données Produites** :
-- 1 288 observations (taille raisonnable pour modélisation)
-- Variables pertinentes (pas de colonnes inutiles)
-- Pas de NaN dans les colonnes clefs
-- Distribution plausible (validée par boxplots)
 
 ---
 
 **Version** : 1.0  
-**Dernière mise à jour** : 13 novembre 2025  
-**Auteur** : Projet Économétrie Appliquée  
-**Contact** : Voir README principal du projet
+**Dernière mise à jour** : 13 novembre 2025   
