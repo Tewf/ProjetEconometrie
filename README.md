@@ -1,5 +1,5 @@
 # Projet d'Économétrie : Modélisation Hédonique des Prix Immobiliers à Grenoble 2025
-ANZID Keltoum - EL KORAICHI Mohamed Yassine - Hamlil Tawfik
+ANZID Keltoum - EL KORAICHI Mohamed Yassine - Hamlil Tewfik
 
 ##  Résumé du Projet :
 
