@@ -1,4 +1,16 @@
-Coté rapport:
-pour la section brève revue de litterature(à enlever et annexer  et merged avec intro) l'exemple que j'ai donné et mettre un plot comme exemple(comme il a fait mehdi)
-section cadre theorique:
-faut mentionner la notre(revue de litterature) en priorité et l'autre comme complmentaire sionon tu auras des problemes(le truc de rosen c trop heavy (ça à l aire AI generated))
+# Notes pour le rapport et les README
+
+## Côté rapport
+
+- Pour la section **Brève revue de littérature** :  
+  La retirer du rapport principal, l’annexer et la fusionner avec l’introduction.  
+  Utiliser l’exemple que j’ai donné et ajouter un plot comme exemple (comme l’a fait Mehdi).
+
+- Section **Cadre théorique** :  
+  Il faut mentionner **notre revue de littérature** en priorité, et l’autre comme complémentaire, sinon tu auras des problèmes.  
+  Le truc de Rosen est trop “heavy” (ça a l’air AI-generated).
+
+## Côté README
+
+- Faire des trucs simples et courts (`README.md`), car on a déjà le rapport.
+- Correction des valeurs.
